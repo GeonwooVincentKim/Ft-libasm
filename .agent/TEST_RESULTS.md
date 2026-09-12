@@ -1,21 +1,25 @@
 # Test Results
 
-## TASK 00–09 — PASS
+## TASK 00–10 — PASS
 
-## TASK 10 — Makefile / clean-build audit
+## TASK 11 — Mandatory subject compliance audit
 
 Date: 2026-09-12
-Environment: Ubuntu 24.04.4 LTS x86_64, NASM 2.16.01, GNU Make 4.3
-Test scope: required rules, incremental rebuild, clean, fclean, re, no -no-pie, no libft
+Environment: Ubuntu 24.04.4 LTS x86_64, NASM 2.16.01, gcc 13.3.0
+Subject: en.subject(libasm).pdf Version 5.5
 Result: PASS
 
-Commands / evidence:
-- Rules present: NAME, all, $(NAME), clean, fclean, re
-- `make` then `make` -> Nothing to be done for 'all'
-- touch ft_strcmp.s && make -> only ft_strcmp.o + libasm.a updated
-- clean: objects gone, libasm.a and testhook kept
-- fclean: libasm.a, testhook, objects gone
-- re: full rebuild of libasm.a
-- ASFLAGS = -f elf64; no -no-pie; no libft references
+Checklist:
+- libasm.a name: PASS
+- testing main links with library: PASS (PIE, no -no-pie)
+- six mandatory functions as .s + archive symbols: PASS
+- 64-bit ELF objects: PASS
+- NASM Intel syntax (no AT&T %reg/$imm): PASS
+- no inline ASM: PASS
+- no bonus files/symbols: PASS
+- no libft build/source dependency: PASS (AGENTS.md mentions libft only as a prohibition)
+- errno via __errno_location: PASS
+- malloc only in ft_strdup: PASS
+- testhook 44/44: PASS
 
 Failure explanation: none
