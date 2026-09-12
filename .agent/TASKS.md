@@ -2,7 +2,6 @@
 
 ## TODO
 
-- [ ] TASK 01 — Build and test infrastructure
 - [ ] TASK 02 — Implement and verify ft_strlen
 - [ ] TASK 03 — Implement and verify ft_strcpy
 - [ ] TASK 04 — Implement and verify ft_strcmp
@@ -32,3 +31,4 @@ None
 ## DONE
 
 - [x] TASK 00 — Repository and environment audit
+- [x] TASK 01 — Build and test infrastructure

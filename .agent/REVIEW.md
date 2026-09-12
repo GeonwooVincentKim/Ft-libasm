@@ -2,25 +2,28 @@
 
 ## TASK 00 self-review
 
+See prior TASK 00 notes. Host matches 42 Tokyo Linux x86-64 NASM/PIE target.
+
+## TASK 01 self-review
+
 Findings:
-- Repository is docs-only. No assembly, Makefile, header, tests, or libasm.a yet.
-- Subject v5.5 mandatory functions match AGENTS.md: ft_strlen, ft_strcpy, ft_strcmp, ft_write, ft_read, ft_strdup.
-- Bonus explicitly out of scope.
-- Host matches expected 42 Tokyo Linux target (x86-64, NASM Intel, PIE).
-- Do not use macOS `___error` or BSD syscall numbers on this target.
-- Do not use `-no-pie`.
-- NASM objects should include `.note.GNU-stack` to avoid executable-stack linker warnings.
-- No libft dependency present.
-- No inline ASM present.
+- Makefile uses NASM Intel via `nasm -f elf64`, archives `libasm.a`, and never passes `-no-pie`.
+- Extra `test` / `testhook` rules are convenience only; required rules are present.
+- Incremental rebuild works (`%.o: %.s`).
+- `main.c` links all six mandatory symbols and contains libc-differential tests for later tasks.
+- Placeholder `.s` files export the required globals and mark `.note.GNU-stack` non-executable.
+- No inline assembly, no libft, no bonus sources.
+- `ft_strdup` tests are NULL-safe so the harness does not crash on placeholders.
 
 ABI concerns:
-- None yet (no implementation). Future functions that call malloc / __errno_location must align RSP to 16 before CALL.
+- Placeholders do not yet preserve anything or call externals.
 
 errno concerns:
-- Future ft_read/ft_write must translate Linux syscall negative returns into errno + -1.
+- Not implemented yet (TASK 05/06).
 
 Specification concerns:
-- Main test program is required by the subject and is not present yet (TASK 01).
+- Subject requires a testing main compiled with the library: satisfied at link time.
+- Functional correctness is deferred to TASK 02–07.
 
 Unresolved issues:
-- None
+- None for infrastructure.
