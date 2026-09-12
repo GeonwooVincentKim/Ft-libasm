@@ -1,21 +1,19 @@
 # Review State
 
-## TASK 07 self-review (ft_strdup)
+## TASK 08 self-review
 
 Findings:
-- malloc(len+1), copy including NUL, return new pointer or NULL if malloc fails.
-- malloc failure leaves errno to malloc (no extra errno write).
-- Copy is independent of ft_strcpy; dest pointer stays in RAX.
+- Full mandatory suite is stable across three consecutive runs after a clean rebuild.
+- Edge binaries independently match libc for all six functions.
 
 ABI concerns:
-- `push rdi` aligns stack before ft_strlen and malloc.
-- malloc uses `wrt ..plt`; ft_strlen is same-archive PC32 (valid in final PIE).
+- Deferred to TASK 09 (static audit of all .s files).
 
 errno concerns:
-- None beyond malloc's own failure path.
+- write/read invalid-fd paths match libc; deferred deeper audit to TASK 09.
 
 Specification concerns:
-- Subject allows calling malloc. No libft.
+- None observed in functional results.
 
 Unresolved issues:
-- None for ft_strdup.
+- None

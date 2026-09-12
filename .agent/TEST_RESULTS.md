@@ -1,22 +1,27 @@
 # Test Results
 
-## TASK 00–06 — PASS
+## TASK 00–07 — PASS
 
-## TASK 07 — ft_strdup
+## TASK 08 — Full mandatory regression
 
 Date: 2026-09-12
 Environment: Ubuntu 24.04.4 LTS x86_64, NASM 2.16.01, gcc 13.3.0
-Test scope: empty, single, normal, spaces, 4096; separate allocation; NUL; libc strcmp
+Test scope: clean rebuild; testhook x3; dedicated strlen/strcpy/strcmp/write/read/strdup edge binaries
 Result: PASS
 
 Commands:
-- `make testhook`
-- `./testhook` -> 44 passed, 0 failed
-- dedicated edge binary: empty/single/normal/spaces/4096 all PASS
+- `make fclean && make testhook`
+- `./testhook` run 1: 44 passed, 0 failed
+- `./testhook` run 2: 44 passed, 0 failed
+- `./testhook` run 3: 44 passed, 0 failed
+- dedicated edge binaries: all *_EDGE_PASS
 
-Notes:
-- Uses ft_strlen from this library (allowed) and malloc@plt.
-- push rdi before calls keeps 16-byte stack alignment.
-- Returned pointer differs from src.
+Coverage vs AGENTS.md:
+- strlen: empty, single, normal, long, libc match
+- strcpy: empty, normal, content, NUL, dest pointer, libc match
+- strcmp: identical, smaller, larger, empty, lengths, unsigned bytes, sign vs libc
+- write: success count/content, zero-length, invalid fd, errno
+- read: success, zero-length, EOF, invalid fd, errno
+- strdup: empty, normal, long, copy, NUL, separate allocation
 
 Failure explanation: none

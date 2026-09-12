@@ -2,7 +2,6 @@
 
 ## TODO
 
-- [ ] TASK 08 — Full mandatory regression/differential tests
 - [ ] TASK 09 — ABI / calling convention / errno audit
 - [ ] TASK 10 — Makefile and clean-build audit
 - [ ] TASK 11 — Mandatory subject compliance audit
@@ -32,3 +31,4 @@ None
 - [x] TASK 05 — Implement and verify ft_write
 - [x] TASK 06 — Implement and verify ft_read
 - [x] TASK 07 — Implement and verify ft_strdup
+- [x] TASK 08 — Full mandatory regression/differential tests
