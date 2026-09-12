@@ -1,29 +1,21 @@
 # Review State
 
-## TASK 00 self-review
-
-See prior TASK 00 notes. Host matches 42 Tokyo Linux x86-64 NASM/PIE target.
-
-## TASK 01 self-review
+## TASK 02 self-review (ft_strlen)
 
 Findings:
-- Makefile uses NASM Intel via `nasm -f elf64`, archives `libasm.a`, and never passes `-no-pie`.
-- Extra `test` / `testhook` rules are convenience only; required rules are present.
-- Incremental rebuild works (`%.o: %.s`).
-- `main.c` links all six mandatory symbols and contains libc-differential tests for later tasks.
-- Placeholder `.s` files export the required globals and mark `.note.GNU-stack` non-executable.
-- No inline assembly, no libft, no bonus sources.
-- `ft_strdup` tests are NULL-safe so the harness does not crash on placeholders.
+- Matches man 3 strlen: count bytes until NUL, return count.
+- Compared with libc on empty, single, normal, long strings.
+- NULL input is undefined in libc; not tested as a mandatory gate.
 
 ABI concerns:
-- Placeholders do not yet preserve anything or call externals.
+- Uses only RAX (return) and RDI (argument). No callee-saved registers.
+- No stack frame, no external calls, no alignment requirement.
 
 errno concerns:
-- Not implemented yet (TASK 05/06).
+- Not applicable.
 
 Specification concerns:
-- Subject requires a testing main compiled with the library: satisfied at link time.
-- Functional correctness is deferred to TASK 02–07.
+- None.
 
 Unresolved issues:
-- None for infrastructure.
+- None for ft_strlen.

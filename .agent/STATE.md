@@ -1,21 +1,14 @@
 # Libasm Project State
 
 Phase: IMPLEMENTATION
-Current Task: TASK 02
-Latest Build: PASS (make / make testhook / make re)
-Latest Tests: TASK 01 infrastructure PASS
+Current Task: TASK 03
+Latest Build: PASS (make re testhook)
+Latest Tests: TASK 02 ft_strlen PASS vs libc
 ITa: NOT_RUN
 ITb: NOT_RUN
 
-Environment assumptions:
-- Official subject: en.subject(libasm).pdf Version 5.5
-- Evaluator target: 42 Tokyo Linux x86-64 (System V AMD64 ABI)
-- Host: Ubuntu 24.04.4 LTS, NASM 2.16.01, gcc 13.3.0, PIE default ON
-- errno via `__errno_location`; Linux SYS_read=0 SYS_write=1
-- Must never use `-no-pie`
-
 Unresolved Issues:
-- Function bodies are still placeholders (xor rax,rax; ret). Functional tests are expected to fail until TASK 02–07.
+- Remaining functions still placeholders.
 
 Next Action:
-- Implement and verify ft_strlen
+- Implement and verify ft_strcpy
