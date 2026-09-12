@@ -2,7 +2,6 @@
 
 ## TODO
 
-- [ ] TASK 05 — Implement and verify ft_write
 - [ ] TASK 06 — Implement and verify ft_read
 - [ ] TASK 07 — Implement and verify ft_strdup
 - [ ] TASK 08 — Full mandatory regression/differential tests
@@ -32,3 +31,4 @@ None
 - [x] TASK 02 — Implement and verify ft_strlen
 - [x] TASK 03 — Implement and verify ft_strcpy
 - [x] TASK 04 — Implement and verify ft_strcmp
+- [x] TASK 05 — Implement and verify ft_write
