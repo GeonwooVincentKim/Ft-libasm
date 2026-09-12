@@ -2,7 +2,6 @@
 
 ## TODO
 
-- [ ] TASK 12 — ITa mandatory integration gate
 - [ ] TASK 13 — ITb final evaluation simulation
 - [ ] TASK 14 — READY_FOR_HUMAN preparation
 
@@ -32,3 +31,4 @@ None
 - [x] TASK 09 — ABI / calling convention / errno audit
 - [x] TASK 10 — Makefile and clean-build audit
 - [x] TASK 11 — Mandatory subject compliance audit
+- [x] TASK 12 — ITa mandatory integration gate
