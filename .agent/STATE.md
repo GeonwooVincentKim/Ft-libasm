@@ -1,14 +1,14 @@
 # Libasm Project State
 
 Phase: IMPLEMENTATION
-Current Task: TASK 06
-Latest Build: PASS (PIE testhook with PLT errno call)
-Latest Tests: TASK 05 ft_write PASS (success + errno)
+Current Task: TASK 07
+Latest Build: PASS
+Latest Tests: TASK 06 ft_read PASS (success, EOF, errno)
 ITa: NOT_RUN
 ITb: NOT_RUN
 
 Unresolved Issues:
-- ft_read and ft_strdup still placeholders.
+- ft_strdup still a placeholder.
 
 Next Action:
-- Implement and verify ft_read (syscall + errno)
+- Implement and verify ft_strdup (malloc + copy)

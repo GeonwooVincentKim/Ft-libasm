@@ -1,23 +1,19 @@
 # Review State
 
-## TASK 05 self-review (ft_write)
+## TASK 06 self-review (ft_read)
 
 Findings:
-- Uses Linux SYS_write (rax=1) with rdi/rsi/rdx already in place.
-- Negative syscall return is negated, stored through `__errno_location`, and the function returns -1.
-- Success path leaves errno untouched (same as libc).
-- External call uses `wrt ..plt` so the object is PIE-safe without `-no-pie`.
-- `push rax` before CALL aligns RSP (entry RSP ≡ 8 mod 16).
+- Uses Linux SYS_read (rax=0) with rdi/rsi/rdx already in place.
+- Same errno/PLT/stack-alignment pattern as ft_write.
 
 ABI concerns:
-- No callee-saved registers used.
-- PLT call required for PIE; do not revert to PC32 `call`.
+- No callee-saved registers. `wrt ..plt` for PIE.
 
 errno concerns:
-- Invalid fd sets EBADF and matches libc write.
+- Invalid fd sets EBADF and matches libc read.
 
 Specification concerns:
 - None.
 
 Unresolved issues:
-- None for ft_write.
+- None for ft_read.
