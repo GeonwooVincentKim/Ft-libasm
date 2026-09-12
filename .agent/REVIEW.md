@@ -1,20 +1,20 @@
 # Review State
 
-## TASK 03 self-review (ft_strcpy)
+## TASK 04 self-review (ft_strcmp)
 
 Findings:
-- Copies including the terminating NUL.
-- Returns the original destination pointer (saved in RAX at entry).
-- Trailing bytes after the copied string match libc (verified with 0x5A fill + memcmp).
+- Zero-extends bytes (`movzx`) so comparison is unsigned, matching libc strcmp.
+- Returns 32-bit difference in EAX (not a forced -1/1). Tests only require sign/equality.
+- Empty, prefix, and high-bit bytes covered.
 
 ABI concerns:
-- Uses RAX, RDI, RSI, DL only (caller-saved). No callee-saved registers, no stack.
+- Uses RAX, RCX, RDI, RSI. No callee-saved registers, no stack.
 
 errno concerns:
 - Not applicable.
 
 Specification concerns:
-- Overlapping buffers are undefined in strcpy; not tested as a gate.
+- None.
 
 Unresolved issues:
-- None for ft_strcpy.
+- None for ft_strcmp.

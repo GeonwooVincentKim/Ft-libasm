@@ -1,19 +1,17 @@
 # Test Results
 
-## TASK 00 — PASS
-## TASK 01 — PASS
-## TASK 02 — ft_strlen PASS
+## TASK 00–03 — PASS
 
-## TASK 03 — ft_strcpy
+## TASK 04 — ft_strcmp
 
 Date: 2026-09-12
 Environment: Ubuntu 24.04.4 LTS x86_64, NASM 2.16.01, gcc 13.3.0
-Test scope: empty/single/normal/spaces/4096; dest pointer; content; NUL; trailing-byte match vs libc
+Test scope: identical, empty, prefix/length, case, unsigned 0x01/0xFF/NUL; sign vs libc
 Result: PASS
 
 Commands:
 - `make testhook`
-- harness strcpy cases: all PASS
-- dedicated edge binary: empty/single/normal/spaces/4096 memcmp-identical to libc strcpy
+- harness strcmp cases: all PASS
+- dedicated edge binary: all signs and several exact diffs match glibc strcmp
 
 Failure explanation: none

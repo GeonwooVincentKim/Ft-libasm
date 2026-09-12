@@ -1,14 +1,14 @@
 # Libasm Project State
 
 Phase: IMPLEMENTATION
-Current Task: TASK 04
+Current Task: TASK 05
 Latest Build: PASS
-Latest Tests: TASK 03 ft_strcpy PASS vs libc
+Latest Tests: TASK 04 ft_strcmp PASS vs libc (sign + unsigned bytes)
 ITa: NOT_RUN
 ITb: NOT_RUN
 
 Unresolved Issues:
-- Remaining functions still placeholders.
+- ft_write, ft_read, ft_strdup still placeholders.
 
 Next Action:
-- Implement and verify ft_strcmp
+- Implement and verify ft_write (syscall + errno)
