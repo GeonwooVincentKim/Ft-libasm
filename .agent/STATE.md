@@ -1,9 +1,9 @@
 # Libasm Project State
 
 Phase: IMPLEMENTATION
-Current Task: TASK 03
-Latest Build: PASS (make re testhook)
-Latest Tests: TASK 02 ft_strlen PASS vs libc
+Current Task: TASK 04
+Latest Build: PASS
+Latest Tests: TASK 03 ft_strcpy PASS vs libc
 ITa: NOT_RUN
 ITb: NOT_RUN
 
@@ -11,4 +11,4 @@ Unresolved Issues:
 - Remaining functions still placeholders.
 
 Next Action:
-- Implement and verify ft_strcpy
+- Implement and verify ft_strcmp

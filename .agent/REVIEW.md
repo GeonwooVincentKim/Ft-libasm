@@ -1,21 +1,20 @@
 # Review State
 
-## TASK 02 self-review (ft_strlen)
+## TASK 03 self-review (ft_strcpy)
 
 Findings:
-- Matches man 3 strlen: count bytes until NUL, return count.
-- Compared with libc on empty, single, normal, long strings.
-- NULL input is undefined in libc; not tested as a mandatory gate.
+- Copies including the terminating NUL.
+- Returns the original destination pointer (saved in RAX at entry).
+- Trailing bytes after the copied string match libc (verified with 0x5A fill + memcmp).
 
 ABI concerns:
-- Uses only RAX (return) and RDI (argument). No callee-saved registers.
-- No stack frame, no external calls, no alignment requirement.
+- Uses RAX, RDI, RSI, DL only (caller-saved). No callee-saved registers, no stack.
 
 errno concerns:
 - Not applicable.
 
 Specification concerns:
-- None.
+- Overlapping buffers are undefined in strcpy; not tested as a gate.
 
 Unresolved issues:
-- None for ft_strlen.
+- None for ft_strcpy.

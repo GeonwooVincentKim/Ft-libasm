@@ -2,7 +2,6 @@
 
 ## TODO
 
-- [ ] TASK 03 — Implement and verify ft_strcpy
 - [ ] TASK 04 — Implement and verify ft_strcmp
 - [ ] TASK 05 — Implement and verify ft_write
 - [ ] TASK 06 — Implement and verify ft_read
@@ -32,3 +31,4 @@ None
 - [x] TASK 00 — Repository and environment audit
 - [x] TASK 01 — Build and test infrastructure
 - [x] TASK 02 — Implement and verify ft_strlen
+- [x] TASK 03 — Implement and verify ft_strcpy
