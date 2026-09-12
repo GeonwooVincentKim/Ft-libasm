@@ -2,7 +2,6 @@
 
 ## TODO
 
-- [ ] TASK 10 — Makefile and clean-build audit
 - [ ] TASK 11 — Mandatory subject compliance audit
 - [ ] TASK 12 — ITa mandatory integration gate
 - [ ] TASK 13 — ITb final evaluation simulation
@@ -32,3 +31,4 @@ None
 - [x] TASK 07 — Implement and verify ft_strdup
 - [x] TASK 08 — Full mandatory regression/differential tests
 - [x] TASK 09 — ABI / calling convention / errno audit
+- [x] TASK 10 — Makefile and clean-build audit
