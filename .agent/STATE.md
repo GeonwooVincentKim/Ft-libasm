@@ -1,14 +1,14 @@
 # Libasm Project State
 
-Phase: IMPLEMENTATION
-Current Task: TASK 07
+Phase: VERIFICATION
+Current Task: TASK 08
 Latest Build: PASS
-Latest Tests: TASK 06 ft_read PASS (success, EOF, errno)
+Latest Tests: TASK 07 ft_strdup PASS; full harness 44/44 PASS
 ITa: NOT_RUN
 ITb: NOT_RUN
 
 Unresolved Issues:
-- ft_strdup still a placeholder.
+- None
 
 Next Action:
-- Implement and verify ft_strdup (malloc + copy)
+- Run full mandatory regression/differential suite

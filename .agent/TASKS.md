@@ -2,7 +2,6 @@
 
 ## TODO
 
-- [ ] TASK 07 — Implement and verify ft_strdup
 - [ ] TASK 08 — Full mandatory regression/differential tests
 - [ ] TASK 09 — ABI / calling convention / errno audit
 - [ ] TASK 10 — Makefile and clean-build audit
@@ -32,3 +31,4 @@ None
 - [x] TASK 04 — Implement and verify ft_strcmp
 - [x] TASK 05 — Implement and verify ft_write
 - [x] TASK 06 — Implement and verify ft_read
+- [x] TASK 07 — Implement and verify ft_strdup

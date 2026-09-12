@@ -1,17 +1,22 @@
 # Test Results
 
-## TASK 00–05 — PASS
+## TASK 00–06 — PASS
 
-## TASK 06 — ft_read
+## TASK 07 — ft_strdup
 
 Date: 2026-09-12
 Environment: Ubuntu 24.04.4 LTS x86_64, NASM 2.16.01, gcc 13.3.0
-Test scope: pipe read, file read, zero-length, EOF, /dev/null, invalid fd, errno vs libc
+Test scope: empty, single, normal, spaces, 4096; separate allocation; NUL; libc strcmp
 Result: PASS
 
 Commands:
 - `make testhook`
-- harness read cases: all PASS
-- dedicated edge binary: pipe/file/EOF/EBADF/libc errno match
+- `./testhook` -> 44 passed, 0 failed
+- dedicated edge binary: empty/single/normal/spaces/4096 all PASS
+
+Notes:
+- Uses ft_strlen from this library (allowed) and malloc@plt.
+- push rdi before calls keeps 16-byte stack alignment.
+- Returned pointer differs from src.
 
 Failure explanation: none
