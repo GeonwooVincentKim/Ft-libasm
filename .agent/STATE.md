@@ -1,14 +1,15 @@
 # Libasm Project State
 
-Phase: INTEGRATION
-Current Task: TASK 13
+Phase: READY_FOR_FINAL_REVIEW
+Current Task: TASK 14 (complete)
 Latest Build: PASS
-Latest Tests: ITa PASS (44/44 x2 after clean build)
+Latest Tests: ITa PASS; ITb PASS; testhook 44/44
 ITa: PASS
-ITb: NOT_RUN
+ITb: PASS
 
 Unresolved Issues:
 - None
 
 Next Action:
-- Run ITb final evaluation simulation from a clean state
+- Human owns final submission. Builder work is complete.
+- PR: automation/libasm -> master (do not merge automatically)
