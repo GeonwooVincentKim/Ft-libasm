@@ -1,0 +1,6 @@
+*.o
+*.a
+testhook
+a.out
+*.swp
+.DS_Store

@@ -2,21 +2,7 @@
 
 ## TODO
 
-- [ ] TASK 00 — Repository and environment audit
-- [ ] TASK 01 — Build and test infrastructure
-- [ ] TASK 02 — Implement and verify ft_strlen
-- [ ] TASK 03 — Implement and verify ft_strcpy
-- [ ] TASK 04 — Implement and verify ft_strcmp
-- [ ] TASK 05 — Implement and verify ft_write
-- [ ] TASK 06 — Implement and verify ft_read
-- [ ] TASK 07 — Implement and verify ft_strdup
-- [ ] TASK 08 — Full mandatory regression/differential tests
-- [ ] TASK 09 — ABI / calling convention / errno audit
-- [ ] TASK 10 — Makefile and clean-build audit
-- [ ] TASK 11 — Mandatory subject compliance audit
-- [ ] TASK 12 — ITa mandatory integration gate
-- [ ] TASK 13 — ITb final evaluation simulation
-- [ ] TASK 14 — READY_FOR_HUMAN preparation
+None
 
 ## IN_PROGRESS
 
@@ -32,4 +18,20 @@ None
 
 ## DONE
 
-None
+- [x] TASK 00 — Repository and environment audit
+- [x] TASK 01 — Build and test infrastructure
+- [x] TASK 02 — Implement and verify ft_strlen
+- [x] TASK 03 — Implement and verify ft_strcpy
+- [x] TASK 04 — Implement and verify ft_strcmp
+- [x] TASK 05 — Implement and verify ft_write
+- [x] TASK 06 — Implement and verify ft_read
+- [x] TASK 07 — Implement and verify ft_strdup
+- [x] TASK 08 — Full mandatory regression/differential tests
+- [x] TASK 09 — ABI / calling convention / errno audit
+- [x] TASK 10 — Makefile and clean-build audit
+- [x] TASK 11 — Mandatory subject compliance audit
+- [x] TASK 12 — ITa mandatory integration gate
+- [x] TASK 13 — ITb final evaluation simulation
+- [x] TASK 14 — READY_FOR_HUMAN preparation
+
+READY_FOR_FINAL_REVIEW
