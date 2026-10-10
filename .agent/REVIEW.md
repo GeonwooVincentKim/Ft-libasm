@@ -1,18 +1,22 @@
 # Review State
 
-## Final self-review
+## TASK 15 — ft_calloc (in progress)
 
-Findings:
-- Mandatory-only libasm.a implemented in NASM Intel 64-bit `.s` files.
-- Functions: ft_strlen, ft_strcpy, ft_strcmp, ft_write, ft_read, ft_strdup.
-- Makefile has NAME/all/clean/fclean/re and incremental rebuild.
-- Testing main links without `-no-pie`.
-- Syscall failures set errno via `__errno_location@plt` and return -1.
-- ft_strdup calls malloc@plt; stack aligned before calls.
-- No bonus, no libft, no inline ASM.
-- ITa PASS, ITb PASS.
+Intended implementation:
+- `ft_calloc.s`: unsigned `mul` overflow check (high half in `rdx`).
+- Overflow: set `errno` to `ENOMEM` via `__errno_location@plt`, return NULL.
+- Success: `malloc@plt` then byte-zero the block; return pointer in `rax`.
+- Zero `nmemb` or `size`: product 0, `malloc(0)`, no overflow (matches glibc).
+- Stack: `push` before external calls so `rsp % 16 == 0`.
+- No libc `calloc`, no libft.
 
-ABI concerns: none remaining.
-errno concerns: none remaining.
-Specification concerns: none remaining.
-Unresolved issues: none.
+ABI concerns to verify:
+- `rdi`/`rsi` args; `rax` return
+- total size preserved across `malloc` (`push`/`pop` into `rcx`)
+- returned pointer preserved in `rax` while zeroing via `rdi`
+- callee-saved unused
+- overflow path alignment before `__errno_location`
+
+errno: overflow sets ENOMEM=12; malloc failure relies on malloc.
+
+Unresolved: pending build/test/valgrind.

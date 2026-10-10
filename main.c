@@ -2,6 +2,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -235,6 +236,117 @@ static void	test_strdup(void)
 	free(lc_s);
 }
 
+static int	all_zero(const unsigned char *p, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		if (p[i] != 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void	test_calloc_zero_args(size_t nmemb, size_t size, const char *name)
+{
+	void	*ft_p;
+	void	*lc_p;
+	int		ft_err;
+	int		lc_err;
+	char	err_name[128];
+
+	errno = 123;
+	ft_p = ft_calloc(nmemb, size);
+	ft_err = errno;
+	errno = 123;
+	lc_p = calloc(nmemb, size);
+	lc_err = errno;
+	expect((ft_p == NULL) == (lc_p == NULL), name);
+	snprintf(err_name, sizeof(err_name), "%s errno", name);
+	expect(ft_err == lc_err, err_name);
+	free(ft_p);
+	free(lc_p);
+}
+
+static void	test_calloc_overflow(size_t nmemb, size_t size, const char *name)
+{
+	void	*ft_p;
+	void	*lc_p;
+	int		ft_err;
+	int		lc_err;
+	char	err_name[128];
+
+	errno = 0;
+	ft_p = ft_calloc(nmemb, size);
+	ft_err = errno;
+	errno = 0;
+	lc_p = calloc(nmemb, size);
+	lc_err = errno;
+	expect(ft_p == NULL && lc_p == NULL, name);
+	snprintf(err_name, sizeof(err_name), "%s errno", name);
+	expect(ft_err == lc_err && ft_err == ENOMEM, err_name);
+}
+
+static void	test_calloc(void)
+{
+	void			*ft_p;
+	void			*lc_p;
+	unsigned char	*b;
+	int				*ints;
+	size_t			n;
+	int				i;
+
+	ft_p = ft_calloc(1, 1);
+	expect(ft_p != NULL, "calloc(1,1) alloc");
+	b = ft_p;
+	expect(ft_p && b[0] == 0, "calloc(1,1) zero");
+	if (ft_p)
+	{
+		b[0] = 0xAB;
+		expect(b[0] == 0xAB, "calloc(1,1) writable");
+	}
+	free(ft_p);
+
+	n = 10 * sizeof(int);
+	ft_p = ft_calloc(10, sizeof(int));
+	lc_p = calloc(10, sizeof(int));
+	expect(ft_p != NULL && lc_p != NULL, "calloc(10,int) alloc");
+	expect(ft_p && all_zero(ft_p, n), "calloc(10,int) zeros");
+	expect(ft_p && lc_p && memcmp(ft_p, lc_p, n) == 0,
+		"calloc(10,int) matches libc");
+	ints = ft_p;
+	if (ints)
+	{
+		i = 0;
+		while (i < 10)
+		{
+			ints[i] = i + 1;
+			i++;
+		}
+		expect(ints[0] == 1 && ints[9] == 10, "calloc(10,int) writable");
+	}
+	free(ft_p);
+	free(lc_p);
+
+	test_calloc_zero_args(0, 0, "calloc(0,0) nullness");
+	test_calloc_zero_args(0, 1, "calloc(0,1) nullness");
+	test_calloc_zero_args(1, 0, "calloc(1,0) nullness");
+	test_calloc_zero_args(0, SIZE_MAX, "calloc(0,SIZE_MAX) nullness");
+
+	test_calloc_overflow(SIZE_MAX, 2, "calloc overflow SIZE_MAX*2");
+	test_calloc_overflow(2, SIZE_MAX, "calloc overflow 2*SIZE_MAX");
+	test_calloc_overflow((SIZE_MAX / 2) + 1, 3,
+		"calloc overflow (SIZE_MAX/2+1)*3");
+
+	ft_p = ft_calloc(4096, 1);
+	expect(ft_p != NULL, "calloc(4096,1) alloc");
+	expect(ft_p && all_zero(ft_p, 4096), "calloc(4096,1) zeros");
+	free(ft_p);
+}
+
 int	main(void)
 {
 	test_strlen();
@@ -243,6 +355,7 @@ int	main(void)
 	test_write();
 	test_read();
 	test_strdup();
+	test_calloc();
 	printf("\n%d passed, %d failed\n", g_pass, g_fail);
 	return (g_fail != 0);
 }

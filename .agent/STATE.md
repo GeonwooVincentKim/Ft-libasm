@@ -1,15 +1,14 @@
 # Libasm Project State
 
-Phase: READY_FOR_FINAL_REVIEW
-Current Task: TASK 14 (complete)
-Latest Build: PASS
-Latest Tests: ITa PASS; ITb PASS; testhook 44/44
-ITa: PASS
-ITb: PASS
+Phase: TASK 15 — ft_calloc
+Current Task: TASK 15 (IN_PROGRESS)
+Latest Build: pending TASK 15 rebuild
+Latest Tests: previous ITa/ITb 44/44; ft_calloc not yet validated
+ITa: PASS (pre-calloc)
+ITb: PASS (pre-calloc)
 
 Unresolved Issues:
-- None
+- Current real evaluation requires ft_calloc even though subject PDF v5.5 omits it.
 
 Next Action:
-- Human owns final submission. Builder work is complete.
-- PR: automation/libasm -> master (do not merge automatically)
+- Build, run existing + ft_calloc tests, Valgrind, nm/objdump audit.
