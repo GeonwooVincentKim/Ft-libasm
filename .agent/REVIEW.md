@@ -1,22 +1,31 @@
 # Review State
 
-## TASK 15 — ft_calloc (in progress)
+## TASK 15 — ft_calloc
 
-Intended implementation:
-- `ft_calloc.s`: unsigned `mul` overflow check (high half in `rdx`).
-- Overflow: set `errno` to `ENOMEM` via `__errno_location@plt`, return NULL.
-- Success: `malloc@plt` then byte-zero the block; return pointer in `rax`.
-- Zero `nmemb` or `size`: product 0, `malloc(0)`, no overflow (matches glibc).
-- Stack: `push` before external calls so `rsp % 16 == 0`.
-- No libc `calloc`, no libft.
+Findings:
+- `ft_calloc.s` added; existing six functions unchanged.
+- Unsigned `mul` into `rdx:rax`; `rdx != 0` is overflow (no naive `nmemb * size`).
+- Overflow: `__errno_location@plt`, store 32-bit ENOMEM (12), return NULL.
+- Success: `malloc@plt(n)`, zero `n` bytes, return original pointer in `rax`.
+- `n == 0` (nmemb or size 0, including 0 * SIZE_MAX): malloc(0), skip stores.
+- malloc failure: `test rax, rax` / `jz .done`, return NULL; errno left to malloc.
+- No libc calloc. No libft. `wrt ..plt` for PIE. `.note.GNU-stack` present.
 
-ABI concerns to verify:
-- `rdi`/`rsi` args; `rax` return
-- total size preserved across `malloc` (`push`/`pop` into `rcx`)
-- returned pointer preserved in `rax` while zeroing via `rdi`
-- callee-saved unused
-- overflow path alignment before `__errno_location`
+ABI:
+- Entry: `rdi` = nmemb, `rsi` = size, return `rax`.
+- `push rax` before malloc: preserves total size and makes `rsp % 16 == 0`.
+- After malloc, size recovered in `rcx`; pointer stays in `rax` while `rdi` walks the fill.
+- Overflow path also `push`/`pop` before `__errno_location`.
+- No callee-saved registers used.
+- `errno` is `int`: `mov dword [rax], 12`.
 
-errno: overflow sets ENOMEM=12; malloc failure relies on malloc.
+errno:
+- Overflow: ENOMEM.
+- malloc fail: malloc's ENOMEM.
+- Zero-size success: errno not modified (matches host glibc).
 
-Unresolved: pending build/test/valgrind.
+Specification:
+- Live evaluation requires ft_calloc even though subject v5.5 omits it.
+- Behavior matched to Linux x86-64 glibc for tested cases.
+
+Unresolved issues: none blocking.

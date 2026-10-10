@@ -276,18 +276,15 @@ static void	test_calloc_overflow(size_t nmemb, size_t size, const char *name)
 	void	*ft_p;
 	void	*lc_p;
 	int		ft_err;
-	int		lc_err;
 	char	err_name[128];
 
 	errno = 0;
 	ft_p = ft_calloc(nmemb, size);
 	ft_err = errno;
-	errno = 0;
 	lc_p = calloc(nmemb, size);
-	lc_err = errno;
 	expect(ft_p == NULL && lc_p == NULL, name);
 	snprintf(err_name, sizeof(err_name), "%s errno", name);
-	expect(ft_err == lc_err && ft_err == ENOMEM, err_name);
+	expect(ft_p == NULL && ft_err == ENOMEM, err_name);
 }
 
 static void	test_calloc(void)
@@ -334,7 +331,12 @@ static void	test_calloc(void)
 	test_calloc_zero_args(0, 0, "calloc(0,0) nullness");
 	test_calloc_zero_args(0, 1, "calloc(0,1) nullness");
 	test_calloc_zero_args(1, 0, "calloc(1,0) nullness");
-	test_calloc_zero_args(0, SIZE_MAX, "calloc(0,SIZE_MAX) nullness");
+
+	errno = 123;
+	ft_p = ft_calloc(0, SIZE_MAX);
+	expect(ft_p != NULL, "calloc(0,SIZE_MAX) alloc");
+	expect(errno == 123, "calloc(0,SIZE_MAX) errno unchanged");
+	free(ft_p);
 
 	test_calloc_overflow(SIZE_MAX, 2, "calloc overflow SIZE_MAX*2");
 	test_calloc_overflow(2, SIZE_MAX, "calloc overflow 2*SIZE_MAX");

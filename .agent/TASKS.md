@@ -6,7 +6,7 @@ None
 
 ## IN_PROGRESS
 
-- [ ] TASK 15 — Add and verify mandatory ft_calloc
+None
 
 ## REVIEW
 
@@ -33,3 +33,4 @@ None
 - [x] TASK 12 — ITa mandatory integration gate
 - [x] TASK 13 — ITb final evaluation simulation
 - [x] TASK 14 — READY_FOR_HUMAN preparation
+- [x] TASK 15 — Add and verify mandatory ft_calloc
