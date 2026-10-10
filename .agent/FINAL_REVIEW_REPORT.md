@@ -17,7 +17,7 @@ Final Verdict: READY_FOR_REVIEW
 
 ## Commit SHA
 
-Recorded at TASK 15 completion on `cursor/add-ft-calloc-5aff`.
+- TASK 15 checkpoint: `139497bb2bd2667d882417701b1f23c199adfdd6` on `cursor/add-ft-calloc-5aff`
 
 ## Build evidence
 
