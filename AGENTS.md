@@ -9,7 +9,9 @@ Never use another student's Libasm implementation as a solution source.
 If another source conflicts with the official supplied subject,
 the supplied subject wins.
 
-Do not silently apply requirements from another Libasm version.
+Authoritative specification: Libasm subject Version 6.0.
+
+Version 5.5 is obsolete. Do not use the older six-function mandatory list.
 
 ---
 
@@ -21,7 +23,7 @@ Required library:
 
 `libasm.a`
 
-Required functions:
+Required functions (Libasm subject Version 6.0):
 
 - `ft_strlen`
 - `ft_strcpy`
@@ -29,6 +31,9 @@ Required functions:
 - `ft_write`
 - `ft_read`
 - `ft_strdup`
+- `ft_calloc`
+
+`ft_calloc` is mandatory. The project is incomplete without it.
 
 A `main` function capable of testing the mandatory implementation
 and linking with `libasm.a` must be maintained.
@@ -121,6 +126,8 @@ TASK 10 — Makefile / clean-build audit
 TASK 11 — Subject compliance audit
 TASK 12 — ITa
 TASK 13 — ITb
+TASK 15 — ft_calloc (mandatory in Version 6.0)
+TASK 16 — Version 6.0 subject compliance (seven functions)
 
 ---
 
@@ -231,6 +238,26 @@ Verify:
 - NUL termination
 - separately allocated memory
 - memory correctness
+
+### ft_calloc
+
+Reproduce the relevant behavior of `calloc`.
+
+`malloc` may be called. Do NOT call libc `calloc`.
+
+Detect `size_t` overflow in `nmemb * size` BEFORE calling `malloc`.
+Do not rely on `malloc(nmemb * size)` to catch wraparound.
+
+Verify:
+
+- ordinary allocations
+- `nmemb == 1` / `size == 1`
+- all allocated bytes are zero
+- returned memory is writable and freeable
+- `nmemb == 0` and `size == 0` (safe; do not require one pointer value)
+- multiplication overflow returns failure (`NULL`) with correct errno
+- malloc failure returns `NULL`
+- no undersized allocation after overflow
 
 ---
 
@@ -380,14 +407,15 @@ Required checks:
 
 1. Build succeeds.
 2. `libasm.a` exists.
-3. All six mandatory functions are linkable.
+3. All seven mandatory functions are linkable (`ft_calloc` included).
 4. Required `main` compiles and links with `libasm.a`.
 5. All mandatory function regression tests pass.
 6. read/write success behavior passes.
 7. read/write failure and errno behavior passes.
 8. strdup allocation/copy tests pass.
-9. No unexpected crash occurs.
-10. Full regression suite passes repeatedly.
+9. calloc allocation, zero-fill, overflow, and malloc-failure paths pass.
+10. No unexpected crash occurs.
+11. Full regression suite passes repeatedly.
 
 Any mandatory failure means:
 
@@ -429,9 +457,11 @@ Verify:
 20. Stack alignment audit where external calls occur.
 21. syscall error handling audit.
 22. errno audit.
-23. final regression.
-24. final git diff/status inspection.
-25. unresolved defect check.
+23. malloc / strdup audit.
+24. calloc overflow-before-malloc / zero-fill audit.
+25. final regression.
+26. final git diff/status inspection.
+27. unresolved defect check.
 
 Any blocking failure means:
 

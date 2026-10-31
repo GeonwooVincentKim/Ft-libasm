@@ -1,31 +1,18 @@
 # Review State
 
-## TASK 15 — ft_calloc
+## TASK 16 — Version 6.0
 
 Findings:
-- `ft_calloc.s` added; existing six functions unchanged.
-- Unsigned `mul` into `rdx:rax`; `rdx != 0` is overflow (no naive `nmemb * size`).
-- Overflow: `__errno_location@plt`, store 32-bit ENOMEM (12), return NULL.
-- Success: `malloc@plt(n)`, zero `n` bytes, return original pointer in `rax`.
-- `n == 0` (nmemb or size 0, including 0 * SIZE_MAX): malloc(0), skip stores.
-- malloc failure: `test rax, rax` / `jz .done`, return NULL; errno left to malloc.
-- No libc calloc. No libft. `wrt ..plt` for PIE. `.note.GNU-stack` present.
-
-ABI:
-- Entry: `rdi` = nmemb, `rsi` = size, return `rax`.
-- `push rax` before malloc: preserves total size and makes `rsp % 16 == 0`.
-- After malloc, size recovered in `rcx`; pointer stays in `rax` while `rdi` walks the fill.
-- Overflow path also `push`/`pop` before `__errno_location`.
+- Mandatory set is seven functions. `ft_calloc` is required.
+- Existing six functions were not rewritten.
+- `ft_calloc.s` detects `nmemb * size` overflow with unsigned `mul` (`rdx != 0`) BEFORE `malloc`.
+- Overflow: `__errno_location@plt`, store ENOMEM (12), return NULL. `malloc` is not called.
+- Success: `malloc@plt`, zero-fill, pointer in `rax`.
+- Zero sizes: product 0, `malloc(0)`, skip stores. Pointer may be NULL or unique; tests do not require one value.
+- Relocs: `malloc` and `__errno_location` only. No libc `calloc`. No libft.
+- Stack: `push` before `malloc` and before `__errno_location` (`rsp % 16 == 0`).
 - No callee-saved registers used.
-- `errno` is `int`: `mov dword [rax], 12`.
 
-errno:
-- Overflow: ENOMEM.
-- malloc fail: malloc's ENOMEM.
-- Zero-size success: errno not modified (matches host glibc).
-
-Specification:
-- Live evaluation requires ft_calloc even though subject v5.5 omits it.
-- Behavior matched to Linux x86-64 glibc for tested cases.
+ABI / errno: no blocking issues on Linux x86-64.
 
 Unresolved issues: none blocking.

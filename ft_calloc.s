@@ -6,7 +6,8 @@ section .text
 
 ; void *ft_calloc(size_t nmemb, size_t size);
 ; rdi = nmemb, rsi = size
-; unsigned-safe nmemb * size; malloc; zero-fill; NULL on overflow/failure
+; unsigned mul into rdx:rax; rdx != 0 is size_t overflow, checked BEFORE malloc
+; malloc; zero-fill; NULL on overflow/failure
 ; Linux ENOMEM = 12
 ft_calloc:
 	mov	rax, rdi

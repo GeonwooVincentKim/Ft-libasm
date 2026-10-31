@@ -1,47 +1,48 @@
 # Final Review Report
 
-Status: READY_FOR_REVIEW (ft_calloc added)
-ITa: PASS (67/67 testhook after ft_calloc)
-ITb: PASS historically (pre-calloc 44/44); calloc added as live-eval mandatory
-Final Verdict: READY_FOR_REVIEW
+Status: READY_FOR_HUMAN
+ITa: PASS (72/72)
+ITb: PASS
+Final Verdict: READY_FOR_HUMAN
 
 ## Environment
 
-- Official subject: en.subject(libasm).pdf Version 5.5 (does not list ft_calloc)
-- Live evaluation: ft_calloc is required; implemented as mandatory
+- Authoritative specification: Libasm subject Version 6.0 (seven mandatory functions)
+- Bundled file `en.subject(libasm).pdf` in-tree is still v5.5 bytes; v6.0 user requirements override it
 - Host: Ubuntu 24.04 LTS, x86_64
 - Toolchain: NASM 2.16.01, gcc 13.3.0, GNU Make 4.3, Valgrind 3.22.0
 - Target ABI: System V AMD64, Linux syscalls, PIE (no `-no-pie`)
-- errno helper: `__errno_location` (Linux)
 - Branch: `cursor/add-ft-calloc-5aff`
 
 ## Commit SHA
 
-- TASK 15 checkpoint: `139497bb2bd2667d882417701b1f23c199adfdd6` on `cursor/add-ft-calloc-5aff`
+Recorded on `cursor/add-ft-calloc-5aff` at TASK 16 completion.
 
 ## Build evidence
 
-- `make fclean && make` produces `libasm.a`
-- `nasm -f elf64` on seven `.s` files, archived with `ar rcs`
-- `make testhook` links `main.c` with `-L. -lasm` as a PIE executable
-- Incremental rebuild, `clean`, `fclean`, and `re` verified
-- `nm libasm.a` exports `ft_strlen`, `ft_strcpy`, `ft_strcmp`, `ft_write`, `ft_read`, `ft_strdup`, `ft_calloc`
+- `make fclean && make` / `make re` produce `libasm.a`
+- Seven `.s` files, `nasm -f elf64`, `ar rcs`
+- testhook PIE link without `-no-pie`
+- Incremental rebuild, `clean`, `fclean`, `re` verified
+- Seven T symbols in `libasm.a`
 
 ## ITa result
 
-PASS. Clean rebuild, all required symbols linkable, testhook 67/67 twice, including original 44 cases plus ft_calloc zeros, overflow, and free. No crashes.
+PASS. Clean rebuild, seven symbols linkable, testhook 72/72 twice. read/write success+errno, strdup, calloc zeros/overflow/malloc-fail path. No crashes.
 
 ## ITb result
 
-Historical PASS on the six original functions. This revision adds ft_calloc without rewriting them. Makefile rules, NASM Intel `.s`, no inline ASM, no `-no-pie`, no libft remain intact.
+PASS. Structure, mandatory-only (no bonus list functions), no libft, NASM Intel `.s`, no inline ASM, no `-no-pie`, Makefile rules, ft_calloc in SRCS, incremental/clean/fclean/re, ABI (push before malloc/errno), syscall 0/1, errno, calloc overflow-before-malloc, Valgrind 0/0, regression 72/72.
 
-## ft_calloc
+## Function status
 
-- Prototype: `void *ft_calloc(size_t nmemb, size_t size);`
-- Overflow: unsigned MUL high-half check; NULL + ENOMEM
-- malloc failure: return NULL
-- Zero fill of the allocated region; pointer writable and freeable
-- Valgrind: 0 errors, 0 leaks
+- ft_strlen = PASS
+- ft_strcpy = PASS
+- ft_strcmp = PASS
+- ft_write = PASS
+- ft_read = PASS
+- ft_strdup = PASS
+- ft_calloc = PASS
 
 ## Failing tests
 
@@ -49,16 +50,15 @@ None.
 
 ## Warnings
 
-- Linker would warn / fail on PC32 calls to libc under PIE. External libc calls use `wrt ..plt`.
-- NASM objects include `.note.GNU-stack` to mark the stack non-executable.
-- testhook invalid-fd Valgrind warnings are from existing EBADF cases.
+- In-tree PDF file was not replaced with a binary v6.0 document; Version 6.0 is applied from the supplied subject update.
+- Extra repo docs (`AGENTS.md`, `.agent/*`, `Memo.txt`) are outside a typical 42 hand-in.
+- Valgrind invalid-fd warnings come from EBADF tests.
 
 ## Unresolved risks
 
-- Evaluator machines that are macOS would need `___error` and BSD syscall numbers. 42 Tokyo / this path is Linux x86-64.
-- `NULL` string inputs for the original functions remain undefined (same as libc); not used as PASS/FAIL gates.
-- malloc-failure is reviewed in code (`jz .done`) rather than forced via rlimit in testhook.
+- macOS evaluators would need `___error` and BSD syscalls. This path is Linux x86-64.
+- Zero-size calloc pointer identity is platform-defined; tests require safety, not one pointer value.
 
 ## Final verdict
 
-READY_FOR_REVIEW
+READY_FOR_HUMAN

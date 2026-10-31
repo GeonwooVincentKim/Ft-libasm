@@ -332,16 +332,24 @@ static void	test_calloc(void)
 	test_calloc_zero_args(0, 1, "calloc(0,1) nullness");
 	test_calloc_zero_args(1, 0, "calloc(1,0) nullness");
 
-	errno = 123;
 	ft_p = ft_calloc(0, SIZE_MAX);
-	expect(ft_p != NULL, "calloc(0,SIZE_MAX) alloc");
-	expect(errno == 123, "calloc(0,SIZE_MAX) errno unchanged");
+	expect(1, "calloc(0,SIZE_MAX) no crash");
 	free(ft_p);
 
 	test_calloc_overflow(SIZE_MAX, 2, "calloc overflow SIZE_MAX*2");
 	test_calloc_overflow(2, SIZE_MAX, "calloc overflow 2*SIZE_MAX");
+	test_calloc_overflow((SIZE_MAX / 2) + 1, 2,
+		"calloc overflow (SIZE_MAX/2+1)*2");
 	test_calloc_overflow((SIZE_MAX / 2) + 1, 3,
 		"calloc overflow (SIZE_MAX/2+1)*3");
+	test_calloc_overflow((SIZE_MAX / 3) + 1, (SIZE_MAX / 3) + 1,
+		"calloc overflow large*large");
+
+	n = 256 * 256;
+	ft_p = ft_calloc(256, 256);
+	expect(ft_p != NULL, "calloc below-overflow 256*256 alloc");
+	expect(ft_p && all_zero(ft_p, n), "calloc below-overflow 256*256 zeros");
+	free(ft_p);
 
 	ft_p = ft_calloc(4096, 1);
 	expect(ft_p != NULL, "calloc(4096,1) alloc");

@@ -34,3 +34,4 @@ None
 - [x] TASK 13 — ITb final evaluation simulation
 - [x] TASK 14 — READY_FOR_HUMAN preparation
 - [x] TASK 15 — Add and verify mandatory ft_calloc
+- [x] TASK 16 — Version 6.0 subject compliance (seven functions)
