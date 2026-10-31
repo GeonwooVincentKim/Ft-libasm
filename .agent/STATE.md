@@ -1,15 +1,15 @@
 # Libasm Project State
 
-Phase: READY_FOR_FINAL_REVIEW
-Current Task: TASK 14 (complete)
-Latest Build: PASS
-Latest Tests: ITa PASS; ITb PASS; testhook 44/44
+Phase: Version 6.0 — ft_calloc mandatory, test matrix complete
+Current Task: TASK 17 (DONE)
+Latest Build: PASS (`make fclean && make`)
+Latest Tests: testhook 96/96 twice; Valgrind 0 errors, 0 leaks
 ITa: PASS
-ITb: PASS
+ITb: PASS (prior gates; calloc implementation unchanged this task)
 
 Unresolved Issues:
-- None
+- In-tree `en.subject(libasm).pdf` is still the older 5.5 file. Authoritative spec is Version 6.0.
 
 Next Action:
-- Human owns final submission. Builder work is complete.
-- PR: automation/libasm -> master (do not merge automatically)
+- Human owns final submission and defense.
+- PR: cursor/add-ft-calloc-5aff

@@ -33,5 +33,6 @@ None
 - [x] TASK 12 — ITa mandatory integration gate
 - [x] TASK 13 — ITb final evaluation simulation
 - [x] TASK 14 — READY_FOR_HUMAN preparation
-
-READY_FOR_FINAL_REVIEW
+- [x] TASK 15 — Add and verify mandatory ft_calloc
+- [x] TASK 16 — Version 6.0 subject compliance (seven functions)
+- [x] TASK 17 — ft_calloc focused v6.0 test matrix
