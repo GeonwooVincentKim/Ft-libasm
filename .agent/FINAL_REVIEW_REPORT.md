@@ -16,7 +16,7 @@ Final Verdict: READY_FOR_HUMAN
 
 ## Commit SHA
 
-Recorded on `cursor/add-ft-calloc-5aff` at TASK 16 completion.
+- TASK 16 checkpoint: `01a3143b5634bee76ad83faede2bf6b7cc1edf0c` on `cursor/add-ft-calloc-5aff`
 
 ## Build evidence
 
