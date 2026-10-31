@@ -1,64 +1,78 @@
-# Final Review Report
+# Final Review Report — independent master verification
 
 Status: READY_FOR_HUMAN
-ITa: PASS (96/96)
-ITb: PASS
+ITa: PASS (96/96) on MASTER_HEAD_SHA
+ITb: PASS on MASTER_HEAD_SHA
 Final Verdict: READY_FOR_HUMAN
+
+## MASTER identity
+
+- TARGET_BRANCH: `master`
+- MASTER_HEAD_SHA: `0d091d292f4b966c5f1e541bac37b16bcf4c5dcb`
+- origin/master: same SHA (fetched 2026-10-31)
+- Commit: Merge pull request #2 from GeonwooVincentKim/cursor/add-ft-calloc-5aff
+- Isolated worktree: `/tmp/libasm-master-review` (detached HEAD at origin/master)
+- Local working branch was NOT used as the review target (`cursor/add-ft-calloc-5aff` @ `af82dd3`)
+
+## MASTER_VS_PREVIOUS_TESTED_COMMIT
+
+MISMATCH of commit SHA (previous recorded evidence used `af82dd3` / TASK 16 `01a3143` on the PR branch).
+
+Source tree of `*.s`, `Makefile`, `libasm.h`, `main.c` is identical to `af82dd3` (`git diff af82dd3 HEAD -- those files` empty). Prior ITa/ITb numbers were **not** reused: this report’s commands were re-executed on `0d091d2`.
 
 ## Environment
 
-- Authoritative specification: Libasm subject Version 6.0 (seven mandatory functions)
-- Bundled file `en.subject(libasm).pdf` in-tree is still v5.5 bytes; v6.0 user requirements override it
+- Authoritative specification: Libasm subject Version 6.0
 - Host: Ubuntu 24.04 LTS, x86_64
 - Toolchain: NASM 2.16.01, gcc 13.3.0, GNU Make 4.3, Valgrind 3.22.0
-- Target ABI: System V AMD64, Linux syscalls, PIE (no `-no-pie`)
-- Branch: `cursor/add-ft-calloc-5aff`
+- Target ABI: System V AMD64, Linux, PIE (no `-no-pie`)
 
-## Commit SHA
+## Build evidence on MASTER_HEAD_SHA
 
-- TASK 16 checkpoint: `01a3143b5634bee76ad83faede2bf6b7cc1edf0c` on `cursor/add-ft-calloc-5aff`
+Executed in `/tmp/libasm-master-review`:
 
-## Build evidence
+1. `make fclean`
+2. `make` — seven `nasm -f elf64` objects, `ar rcs libasm.a`
+3. `make` again — `Nothing to be done for 'all'`
+4. `make clean` — objects removed; `libasm.a` remains
+5. `make` — rebuilds objects and archive
+6. `make fclean` — library and testhook removed
+7. `make re` — full rebuild
+8. `make testhook` — PIE link, no `-no-pie`
 
-- `make fclean && make` / `make re` produce `libasm.a`
-- Seven `.s` files, `nasm -f elf64`, `ar rcs`
-- testhook PIE link without `-no-pie`
-- Incremental rebuild, `clean`, `fclean`, `re` verified
-- Seven T symbols in `libasm.a`
+`nm libasm.a` T symbols: ft_strlen, ft_strcpy, ft_strcmp, ft_write, ft_read, ft_strdup, ft_calloc.
 
-## ITa result
+`readelf -r ft_calloc.o`: `malloc`, `__errno_location` only (not libc calloc).
 
-PASS. Clean rebuild, seven symbols linkable, testhook 96/96 twice. read/write success+errno, strdup, calloc zeros/overflow/malloc-fail path. No crashes.
+## ITa (executed on 0d091d2)
 
-## ITb result
+PASS. `./testhook` twice: **96 passed, 0 failed**. Covers seven functions including calloc(1,1)/(1,N)/(N,1), zeros, writable, free, zero-size, overflow SIZE_MAX*2, 2*SIZE_MAX, SIZE_MAX*SIZE_MAX, (SIZE_MAX/2+1)*2, 2*(SIZE_MAX/2+1), ENOMEM, below-overflow 256*256.
 
-PASS. Structure, mandatory-only (no bonus list functions), no libft, NASM Intel `.s`, no inline ASM, no `-no-pie`, Makefile rules, ft_calloc in SRCS, incremental/clean/fclean/re, ABI (push before malloc/errno), syscall 0/1, errno, calloc overflow-before-malloc, Valgrind 0/0, regression 96/96.
+Valgrind: `valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=42 ./testhook` — 0 errors, 0 leaks, 29/29 alloc/free.
 
-## Function status
+## ITb (executed on 0d091d2)
 
-- ft_strlen = PASS
-- ft_strcpy = PASS
-- ft_strcmp = PASS
-- ft_write = PASS
-- ft_read = PASS
-- ft_strdup = PASS
-- ft_calloc = PASS
+PASS. Seven `.s` sources on master, no libft, no `-no-pie`, NASM Intel, no inline ASM, Makefile NAME/all/clean/fclean/re, incremental second make idle, ABI push-before-malloc/errno, SYS_write=1 SYS_read=0, worktree git status clean of tracked files after build (gitignored artifacts only).
 
-## Failing tests
+## Function review (master sources)
 
-None.
+- ft_strlen: PASS
+- ft_strcpy: PASS
+- ft_strcmp: PASS (sign/unsigned; not exact ±1)
+- ft_write: PASS (syscall 1, -1, errno)
+- ft_read: PASS (syscall 0, EOF, -1, errno)
+- ft_strdup: PASS (malloc, copy, NUL, alignment via push)
+- ft_calloc: PASS (mul overflow before malloc, NULL+ENOMEM, zero-fill, malloc fail jz)
 
 ## Warnings
 
-- In-tree PDF file was not replaced with a binary v6.0 document; Version 6.0 is applied from the supplied subject update.
-- Extra repo docs (`AGENTS.md`, `.agent/*`, `Memo.txt`) are outside a typical 42 hand-in.
-- Valgrind invalid-fd warnings come from EBADF tests.
-
-## Unresolved risks
-
-- macOS evaluators would need `___error` and BSD syscalls. This path is Linux x86-64.
-- Zero-size calloc pointer identity is platform-defined; tests require safety, not one pointer value.
+- Bundled `en.subject(libasm).pdf` remains v5.5 bytes; Version 6.0 is applied from the supplied update.
+- Extra docs (`AGENTS.md`, `.agent/*`, `Memo.txt`) are outside a typical 42 hand-in.
+- Valgrind invalid-fd warnings from EBADF tests are not errors.
 
 ## Final verdict
 
 READY_FOR_HUMAN
+
+Human final review and defense preparation are still required.
+This verification did not merge, did not modify master, and did not submit to 42.
