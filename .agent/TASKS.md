@@ -35,3 +35,4 @@ None
 - [x] TASK 14 — READY_FOR_HUMAN preparation
 - [x] TASK 15 — Add and verify mandatory ft_calloc
 - [x] TASK 16 — Version 6.0 subject compliance (seven functions)
+- [x] TASK 17 — ft_calloc focused v6.0 test matrix

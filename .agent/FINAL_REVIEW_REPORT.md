@@ -1,7 +1,7 @@
 # Final Review Report
 
 Status: READY_FOR_HUMAN
-ITa: PASS (72/72)
+ITa: PASS (96/96)
 ITb: PASS
 Final Verdict: READY_FOR_HUMAN
 
@@ -28,11 +28,11 @@ Final Verdict: READY_FOR_HUMAN
 
 ## ITa result
 
-PASS. Clean rebuild, seven symbols linkable, testhook 72/72 twice. read/write success+errno, strdup, calloc zeros/overflow/malloc-fail path. No crashes.
+PASS. Clean rebuild, seven symbols linkable, testhook 96/96 twice. read/write success+errno, strdup, calloc zeros/overflow/malloc-fail path. No crashes.
 
 ## ITb result
 
-PASS. Structure, mandatory-only (no bonus list functions), no libft, NASM Intel `.s`, no inline ASM, no `-no-pie`, Makefile rules, ft_calloc in SRCS, incremental/clean/fclean/re, ABI (push before malloc/errno), syscall 0/1, errno, calloc overflow-before-malloc, Valgrind 0/0, regression 72/72.
+PASS. Structure, mandatory-only (no bonus list functions), no libft, NASM Intel `.s`, no inline ASM, no `-no-pie`, Makefile rules, ft_calloc in SRCS, incremental/clean/fclean/re, ABI (push before malloc/errno), syscall 0/1, errno, calloc overflow-before-malloc, Valgrind 0/0, regression 96/96.
 
 ## Function status
 

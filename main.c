@@ -287,6 +287,35 @@ static void	test_calloc_overflow(size_t nmemb, size_t size, const char *name)
 	expect(ft_p == NULL && ft_err == ENOMEM, err_name);
 }
 
+static void	test_calloc_block(size_t nmemb, size_t size, const char *name)
+{
+	void			*ft_p;
+	void			*lc_p;
+	unsigned char	*b;
+	size_t			total;
+	char			label[128];
+
+	total = nmemb * size;
+	ft_p = ft_calloc(nmemb, size);
+	lc_p = calloc(nmemb, size);
+	snprintf(label, sizeof(label), "%s alloc", name);
+	expect(ft_p != NULL && lc_p != NULL, label);
+	snprintf(label, sizeof(label), "%s zeros", name);
+	expect(ft_p && all_zero(ft_p, total), label);
+	snprintf(label, sizeof(label), "%s matches libc", name);
+	expect(ft_p && lc_p && memcmp(ft_p, lc_p, total) == 0, label);
+	b = ft_p;
+	if (b && total > 0)
+	{
+		b[0] = 0x5A;
+		b[total - 1] = 0xA5;
+		snprintf(label, sizeof(label), "%s writable", name);
+		expect(b[0] == 0x5A && b[total - 1] == 0xA5, label);
+	}
+	free(ft_p);
+	free(lc_p);
+}
+
 static void	test_calloc(void)
 {
 	void			*ft_p;
@@ -328,6 +357,12 @@ static void	test_calloc(void)
 	free(ft_p);
 	free(lc_p);
 
+	test_calloc_block(1, 64, "calloc(1,64)");
+	test_calloc_block(64, 1, "calloc(64,1)");
+	test_calloc_block(4, sizeof(int), "calloc(4,int)");
+	test_calloc_block(16, sizeof(long), "calloc(16,long)");
+	test_calloc_block(512, 1, "calloc moderate 512");
+
 	test_calloc_zero_args(0, 0, "calloc(0,0) nullness");
 	test_calloc_zero_args(0, 1, "calloc(0,1) nullness");
 	test_calloc_zero_args(1, 0, "calloc(1,0) nullness");
@@ -338,8 +373,11 @@ static void	test_calloc(void)
 
 	test_calloc_overflow(SIZE_MAX, 2, "calloc overflow SIZE_MAX*2");
 	test_calloc_overflow(2, SIZE_MAX, "calloc overflow 2*SIZE_MAX");
+	test_calloc_overflow(SIZE_MAX, SIZE_MAX, "calloc overflow SIZE_MAX*SIZE_MAX");
 	test_calloc_overflow((SIZE_MAX / 2) + 1, 2,
 		"calloc overflow (SIZE_MAX/2+1)*2");
+	test_calloc_overflow(2, (SIZE_MAX / 2) + 1,
+		"calloc overflow 2*(SIZE_MAX/2+1)");
 	test_calloc_overflow((SIZE_MAX / 2) + 1, 3,
 		"calloc overflow (SIZE_MAX/2+1)*3");
 	test_calloc_overflow((SIZE_MAX / 3) + 1, (SIZE_MAX / 3) + 1,
